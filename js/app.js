@@ -1,11 +1,30 @@
 console.log("River Boat Game");
 
+$("#gif").hide()
+
+$("#introImage").on('click', function() {
+  $("#introImage").hide();
+  $("#gif").show();
+});
 
 
 
 
 
-const boat = {
+class Boat {
+	constructor (boatName) {
+		this.name = boatName;
+		this.lives = 3;
+	}
+	
+}
+
+
+
+
+
+
+const game = {
 	lives: 3,
 	name: null,
 	direction: '',
@@ -14,12 +33,21 @@ const boat = {
     isAlive: false,
 
 
-// start: function () {
+	// start: function () {
 
-// }
+	// }
 
+	makeBoat: function(boatName) {
+		const gameBoat = new Boat(boatName)
+		this.player = gameBoat
+		console.log(this.player);
+		$( "#nameTitle" ).text(this.player.name);
+		$("#name").hide()
+		$("#submit").hide()
+		
+	},
 
-move: function() {
+	move: function() {
 
     	if(this.direction === "left"){
     		if(this.x - 350 > 0){
@@ -30,15 +58,11 @@ move: function() {
 
     	else if(this.direction === "right"){
             if(this.x + 350 < 800){
-            // move right on x axis
-    		this.x += 10;
+	            // move right on x axis
+	    		this.x += 10;
     	    }
     	}
-
-
-
-
-    	
+	    	
     }
 
 }
@@ -46,15 +70,23 @@ move: function() {
 
 
 
+// game.makeBoat()
+
+
+// if(key === 39){
+// 		boat.direction = "right";
+
+// 	} else if (key === 37){
+// 		vamp.direction = "left";
+
+// 	}
 
 
 
 
 
-
-
-
-
-
-
+$("#submit").on('click', function() {
+    let theValue = $("#name").val();
+    game.makeBoat(theValue);
+})
 

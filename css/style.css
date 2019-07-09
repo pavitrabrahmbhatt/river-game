@@ -22,5 +22,13 @@ h1 {
 
 #gif {
 	width: 800px;
-	height: 800px;
+	height: 900px;
+}
+
+p {
+	color: white;
+}
+
+#userName {
+	color: white;
 }
