@@ -48,9 +48,28 @@ class Boat {
 
 }
 
+class Obstacle {
+	constructor() {
+		this.x = 250 
+		this.y = 250
+		this.width = 100
+		this.height = 100
+		this.color = "black"
+	}
+  	draw() {
+	    ctx.beginPath();
+	    ctx.rect(this.x, this.y, this.width, this.height)
+	    ctx.fillStyle = "black";
+	    ctx.fill();
+  	}
+}
+  
+
+
 const game = {
 
 	player: null,
+	obstacles: [],
 
 	makeBoat: function(boatName) {
 		const gameBoat = new Boat(boatName)
@@ -64,11 +83,18 @@ const game = {
 
 	clearCanvas() {
   		ctx.clearRect(0, 0, canvas.width, canvas.height)
+	},
+
+	makeObstacles: function () {
+		const firstObstacle = new Obstacle()
+		this.obstacles.push(firstObstacle)
+		console.log(this.obstacles);
+		this.obstacles[0].draw()
 	}
 }
 
 
-console.log(game.player);
+
 
 
 
@@ -82,11 +108,13 @@ $("#introImage").on('click', function() {
 $("#submit").on('click', function() {
     let theValue = $("#name").val();
     game.makeBoat(theValue);
+    game.makeObstacles();
 })
 
 
 $(document).on('keydown', function(e) {
 	game.player.move(e.key)
+
 });
 
 
