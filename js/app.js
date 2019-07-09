@@ -22,6 +22,7 @@ class Boat {
 	}
 
 	move(direction) {
+
 	    if(direction=="ArrowDown") {
 	      this.y += this.speed;
 	    }
@@ -67,7 +68,7 @@ const game = {
 }
 
 
-
+console.log(game.player);
 
 
 
@@ -82,6 +83,11 @@ $("#submit").on('click', function() {
     let theValue = $("#name").val();
     game.makeBoat(theValue);
 })
+
+
+$(document).on('keydown', function(e) {
+	game.player.move(e.key)
+});
 
 
 
