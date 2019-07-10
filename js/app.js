@@ -35,8 +35,13 @@ class Boat {
 	    if(direction=="ArrowRight") {
 	      this.x += this.speed;
 	    }
+
 	    game.clearCanvas();
+
 	    this.draw();
+
+	    game.drawObstacles()
+	    
 	}
 
 	draw() {
@@ -50,10 +55,10 @@ class Boat {
 
 class Obstacle {
 	constructor() {
-		this.x = 250 
-		this.y = 250
-		this.width = 100
-		this.height = 100
+		this.x = Math.floor(Math.random() * 750) + 5   
+		this.y = Math.floor(Math.random() * 750) + 5  
+		this.width = 50
+		this.height = 50
 		this.color = "black"
 	}
   	draw() {
@@ -71,6 +76,8 @@ const game = {
 	player: null,
 	obstacles: [],
 
+	
+
 	makeBoat: function(boatName) {
 		const gameBoat = new Boat(boatName)
 		this.player = gameBoat
@@ -86,11 +93,32 @@ const game = {
 	},
 
 	makeObstacles: function () {
-		const firstObstacle = new Obstacle()
-		this.obstacles.push(firstObstacle)
-		console.log(this.obstacles);
-		this.obstacles[0].draw()
-	}
+		for (let i = 0; i < 20; i++) {
+			const firstObstacle = new Obstacle()
+			this.obstacles.push(firstObstacle)
+			firstObstacle.draw()
+			
+		}
+	},
+
+	drawObstacles() {
+	    for (let i = 0; i < 20; i++){
+	    	game.obstacles[i].draw();
+	    }
+	},
+
+	checkCollision(thing) {
+    if(
+	    this.x + this.width > thing.x &&
+	    this.x < thing.x + thing.width &&
+	    thing.y < this.y + this.height && 
+	    thing.y + thing.height > this.y
+    ) {
+      console.log("collision");
+      return true
+    }
+    else return false;
+  },
 }
 
 
