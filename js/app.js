@@ -8,6 +8,10 @@ const ctx = canvas.getContext('2d');
 console.log(ctx); // cool, our rendering context is set up
 
 //$("#gif").hide()
+$("#my-canvas").hide()
+$("#submit").hide()
+$("#name").hide()
+
 
 
 class Boat {
@@ -52,9 +56,9 @@ class Boat {
 }
 
 class Obstacle {
-	constructor() {
+	constructor(row) {
 		this.x = Math.floor(Math.random() * 750) + 5   
-		this.y = Math.floor(Math.random() * 600) + 5  
+		this.y = row 
 		this.width = 50
 		this.height = 50
 		this.color = "black"
@@ -74,7 +78,7 @@ const game = {
 	player: null,
 	obstacles: [],
 	isAlive: false,
-	numberOfObstacles: 15,
+	numberOfObstacles: 20,
 
 	countLives: function (){
 		if (this.checkCollision() === true){
@@ -114,7 +118,17 @@ const game = {
 
 	makeObstacles: function () {
 		for (let i = 0; i < this.numberOfObstacles; i++) {
-			const firstObstacle = new Obstacle()
+
+			let row = Math.floor(Math.random() * 3) + 1
+			let whatPart = 0
+			if (row === 1) {
+				whatPart = 350 
+			} else if (row === 2) {
+				whatPart = 560
+			} else if (row === 3) {
+				whatPart = 150
+			}
+			const firstObstacle = new Obstacle(whatPart)
 			this.obstacles.push(firstObstacle)
 			firstObstacle.draw()
 			
@@ -153,6 +167,11 @@ const game = {
 
 $("#introImage").on('click', function() {
   	$("#introImage").hide();
+  	$("#name").show()
+  	$("#submit").show()
+  	$("#my-canvas").show()
+  	
+
   	//$("#gif").show();
 });
 
