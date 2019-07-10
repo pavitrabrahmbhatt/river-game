@@ -35,9 +35,12 @@ class Boat {
 	    }
 	    game.clearCanvas();
 	    this.draw();
-	    
+	    game.countLives()
 	    game.checkCollision()
 	    game.countLives()
+	    ctx.font = "30px Arial";
+		ctx.fillText("Lives: " + game.player.lives, 10, 780);
+		game.isAlive()
 	}
 	
 	draw() {
@@ -81,11 +84,11 @@ const game = {
 	},
 
 	isAlive: function(){
-		if (this.lives > 0) {
-			this.isAlive = true
-		} else {
-			this.isAlive = false
+		if (this.player.lives <= 0) {
 			this.endGame()
+			return false
+		} else {
+			return true
 		}
 	},
 
