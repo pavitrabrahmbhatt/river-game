@@ -56,8 +56,8 @@ class Boat {
 }
 
 class Obstacle {
-	constructor(row) {
-		this.x = Math.floor(Math.random() * 750) + 5   
+	constructor(column,row) {
+		this.x = column  
 		this.y = row 
 		this.width = 50
 		this.height = 50
@@ -120,7 +120,7 @@ const game = {
 
 	makeObstacles: function () {
 		for (let i = 0; i < this.numberOfObstacles; i++) {
-
+			let column = Math.floor(Math.random() * 750) + 5 
 			let row = Math.floor(Math.random() * 5) + 1
 			let whatPart = 0
 			if (row === 1) {
@@ -134,13 +134,14 @@ const game = {
 			} else if (row === 5) {
 				whatPart = 600
 			}
-			const firstObstacle = new Obstacle(whatPart)
+			const firstObstacle = new Obstacle(column,whatPart)
 			this.obstacles.push(firstObstacle)
 			firstObstacle.draw()
 			
 		}
 	},
 
+	
 	drawObstacles() {
 		for (let i = 0; i < this.obstacles.length; i++){
 	    	this.obstacles[i].draw()
@@ -152,6 +153,29 @@ const game = {
 	    	game.obstacles[i].x++;
 		}
 
+	},
+	moreObstacles() {
+		for (let i = 0; i < 2; i++) {
+			let row = Math.floor(Math.random() * 5) + 1
+			let whatPart = 0
+			if (row === 1) {
+				whatPart = 450 
+			} else if (row === 2) {
+				whatPart = 300
+			} else if (row === 3) {
+				whatPart = 150
+			} else if (row === 4) {
+				whatPart = 50
+			} else if (row === 5) {
+				whatPart = 600
+			}
+			let col = 60
+			const newOb = new Obstacle(col,whatPart)
+			this.obstacles.push(newOb)
+			newOb.draw()
+			console.log("hi");
+			
+		}
 	},
 	checkCollision() { 
 		for(let i = 0; i < this.obstacles.length; i++){
@@ -178,7 +202,6 @@ const game = {
 
 let frame = 0
 function animate() {
-	//frame++
 
 	game.clearCanvas();
 	game.moveObstacles();
@@ -186,6 +209,10 @@ function animate() {
 	game.player.draw();
 
 	// every 60 frames
+	frame++
+	if (frame%40 === 0) {
+		game.moreObstacles()
+	}
 
 
 	window.requestAnimationFrame(animate)
