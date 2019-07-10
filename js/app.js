@@ -35,9 +35,11 @@ class Boat {
 	    }
 	    game.clearCanvas();
 	    this.draw();
-	    game.drawObstacles()
+	    
 	    game.checkCollision()
+	    game.countLives()
 	}
+	
 	draw() {
 	  	ctx.beginPath();
 	    ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
@@ -69,11 +71,12 @@ const game = {
 	player: null,
 	obstacles: [],
 	isAlive: false,
-	numberOfObstacles: 20,
+	numberOfObstacles: 15,
 
-	livesCount: function (){
-		if (this.checkCollision === true){
-			this.player.lives --;
+	countLives: function (){
+		if (this.checkCollision() === true){
+			this.player.lives--;
+			console.log(this.player.lives);
 		}
 	},
 
@@ -121,9 +124,9 @@ const game = {
 	    }
 	},
 
-	checkCollision() { console.log("cc");
+	checkCollision() { 
 		for(let i = 0; i < this.obstacles.length; i++){
-			console.log(this.obstacles[i]);
+			
 		    if ( 
 		    	this.player.x + this.player.r > this.obstacles[i].x &&
 	    		this.player.x - this.player.r < this.obstacles[i].x + this.obstacles[i].width &&
@@ -131,9 +134,11 @@ const game = {
 		    	this.player.y - this.player.r < this.obstacles[i].y + this.obstacles[i].height			
   			) { 
 	     		console.log("collision");
+	     		this.obstacles.splice(i,1);
 	         	return true
 	    	} 
 		} 
+		game.drawObstacles()
 		return false
 	},
 
