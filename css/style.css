@@ -5,6 +5,7 @@ canvas {
   display: block; 
   margin: 0 auto;
   border: 4px solid black;
+  /*background-image: url("https://media.giphy.com/media/SHUu78CIqq4FO/giphy.gif")*/
 }  
 
 body {

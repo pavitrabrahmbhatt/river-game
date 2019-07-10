@@ -69,6 +69,7 @@ class Obstacle {
 	    ctx.fillStyle = "black";
 	    ctx.fill();
   	}
+  	
 }
   
 
@@ -78,7 +79,7 @@ const game = {
 	player: null,
 	obstacles: [],
 	isAlive: false,
-	numberOfObstacles: 20,
+	numberOfObstacles: 30,
 
 	countLives: function (){
 		if (this.checkCollision() === true){
@@ -110,6 +111,7 @@ const game = {
 		$("#name").hide()
 		$("#submit").hide()	
 		this.player.draw()
+		animate()
 	},
 
 	clearCanvas() {
@@ -119,14 +121,18 @@ const game = {
 	makeObstacles: function () {
 		for (let i = 0; i < this.numberOfObstacles; i++) {
 
-			let row = Math.floor(Math.random() * 3) + 1
+			let row = Math.floor(Math.random() * 5) + 1
 			let whatPart = 0
 			if (row === 1) {
-				whatPart = 350 
+				whatPart = 450 
 			} else if (row === 2) {
-				whatPart = 560
+				whatPart = 300
 			} else if (row === 3) {
 				whatPart = 150
+			} else if (row === 4) {
+				whatPart = 50
+			} else if (row === 5) {
+				whatPart = 600
 			}
 			const firstObstacle = new Obstacle(whatPart)
 			this.obstacles.push(firstObstacle)
@@ -136,11 +142,17 @@ const game = {
 	},
 
 	drawObstacles() {
-	    for (let i = 0; i < this.obstacles.length; i++){
-	    	this.obstacles[i].draw();
-	    }
+		for (let i = 0; i < this.obstacles.length; i++){
+	    	this.obstacles[i].draw()
+		}
 	},
+	moveObstacles() {
+	 
+		for (let i = 0; i < game.obstacles.length; i++){
+	    	game.obstacles[i].x++;
+		}
 
+	},
 	checkCollision() { 
 		for(let i = 0; i < this.obstacles.length; i++){
 			
@@ -155,13 +167,28 @@ const game = {
 	         	return true
 	    	} 
 		} 
-		game.drawObstacles()
+		// this.drawObstacles()
 		return false
 	},
 
 	// restartGame() {
 
 	// }
+}
+
+let frame = 0
+function animate() {
+	//frame++
+
+	game.clearCanvas();
+	game.moveObstacles();
+	game.drawObstacles()
+	game.player.draw();
+
+	// every 60 frames
+
+
+	window.requestAnimationFrame(animate)
 }
 
 
@@ -185,16 +212,9 @@ $("#submit").on('click', function() {
 
 $(document).on('keydown', function(e) {
 	game.player.move(e.key)
-
 });
 
 
 
 
-function sayHello() {
-	console.log("sayHello");
-	return 5
-	// asd;lfkja;sldkfja;lsdkfj;alsdkfj
-	console.log("hello")
-}
-sayHello()
+
