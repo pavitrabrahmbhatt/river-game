@@ -36,7 +36,8 @@ body {
 
 h1 {
 	color: white;
-	font-size: 80px
+	font-size: 80px;
+	text-align: center;
 
 }
 
@@ -55,7 +56,9 @@ h1 {
 
 	text-align: center;
 
-   
+}
+#letsPlay{
+	margin-top:35%;
 }
 
 #gif {
@@ -96,6 +99,26 @@ p {
 	margin-top:25%;
 }
 
+#gameWon {
+	font-size: 75px;
+	color:white;
+	height: 400px;
+  	width: 600px;
+  	background-color: black;
+  	opacity: 0.6;
+  	display: inline-block;
+    position: fixed;
+    top: 250px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin:auto;
+}
+
+#gameWonTag {
+	text-align: center;
+	margin-top:25%;
+}
 
 /*#playAgain:hover {
  	font-size: 100px;

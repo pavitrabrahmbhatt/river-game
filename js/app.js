@@ -12,6 +12,8 @@ $("#my-canvas").hide()
 $("#submit").hide()
 $("#name").hide()
 $("#gameOver").hide()
+$("#sailBoat").hide()
+$("#gameWon").hide()
 
 
 
@@ -44,17 +46,22 @@ class Boat {
 	    game.checkCollision()
 	    game.countLives()
 	    game.isAlive()
+	    game.checkWin()
 	    ctx.font = "30px Arial";
 	    ctx.fillStyle = 'black';
 		ctx.fillText("Lives: " + game.player.lives, 10, 780);
 		
+		
 	}
 	
 	draw() {
-	  	ctx.beginPath();
-	    ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
-	    ctx.fillStyle = "cadetblue";
-	    ctx.fill();
+		let sailBoat = $("#sailBoat")
+		
+		ctx.drawImage(sailBoat[0], this.x, this.y, 50,50);
+	  	// ctx.beginPath();
+	   //  ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
+	   //  ctx.fillStyle = "cadetblue";
+	   //  ctx.fill();
 	}
 }
 
@@ -66,14 +73,27 @@ class Obstacle {
 		this.height = 50
 		this.color = "black"
 	}
-  	draw() {
- 
-	    ctx.beginPath();
-	    ctx.rect(this.x, this.y, this.width, this.height)
-	    ctx.fillStyle = "black";
-	    ctx.fill();
-	    ctx.globalCompositeOperation='source-over';
+  	draw1() {
+ 		let shark = $("#shark")
+		ctx.drawImage(shark[0], this.x, this.y, 50,50);
   	}
+  	draw2() {
+ 		let cone = $("#cone")
+		ctx.drawImage(cone[0], this.x, this.y, 50,50);
+  	}
+  	draw3() {
+ 		let stone = $("#stone")
+		ctx.drawImage(stone[0], this.x, this.y, 50,50);
+  	}
+  	draw4() {
+ 		let croc = $("#croc")
+		ctx.drawImage(croc[0], this.x, this.y, 50,50);
+  	}
+  	draw5() {
+ 		let grass = $("#grass")
+		ctx.drawImage(grass[0], this.x, this.y, 50,50);
+  	}
+
   	
 }
   
@@ -98,6 +118,11 @@ const game = {
 		ctx.fillText("Lives: " + game.player.lives, 10, 780);
 		
 	},
+	checkWin(){
+		if (this.player.y < 10 ){
+			game.winGame()
+		}
+	},
 
 	isAlive: function(){
 		if (this.player.lives <= 0) {
@@ -114,6 +139,7 @@ const game = {
 	endGame: function () {
 			console.log("You have died");
 			stopAnimation()
+			game.clearCanvas()
 			$("#gameOver").show()
 		
 	},
@@ -151,8 +177,23 @@ const game = {
 				whatPart = 600
 			}
 			const firstObstacle = new Obstacle(column,whatPart)
-			this.obstacles.push(firstObstacle)
-			firstObstacle.draw()
+			if (whatPart = 450) {
+				this.obstacles.push(firstObstacle)
+				firstObstacle.draw1()
+			} else if (whatPart = 300) {
+				this.obstacles.push(firstObstacle)
+				firstObstacle.draw2()
+			} else if (whatPart = 150) {
+				this.obstacles.push(firstObstacle)
+				firstObstacle.draw3()
+			} else if (whatPart = 50) {
+				this.obstacles.push(firstObstacle)
+				firstObstacle.draw4()
+			} else if (whatPart = 600) {
+				this.obstacles.push(firstObstacle)
+				firstObstacle.draw5()
+			}
+			
 			
 		}
 	},
@@ -160,8 +201,9 @@ const game = {
 	
 	drawObstacles() {
 		for (let i = 0; i < this.obstacles.length; i++){
-	    	this.obstacles[i].draw()
+	    	this.obstacles[i].draw5()
 		}
+		
 	},
 	moveObstacles() {
 	 
@@ -188,9 +230,25 @@ const game = {
 			}
 			let col = 60
 			const newOb = new Obstacle(col,whatPart)
-			this.obstacles.push(newOb)
-			newOb.draw()
-			console.log("hi");
+			if (whatPart = 450) {
+				this.obstacles.push(newOb)
+				newOb.draw1()
+			} else if (whatPart = 300) {
+				this.obstacles.push(newOb)
+				newOb.draw2()
+			} else if (whatPart = 150) {
+				this.obstacles.push(newOb)
+				newOb.draw3()
+			} else if (whatPart = 50) {
+				this.obstacles.push(newOb)
+				newOb.draw4()
+			} else if (whatPart = 600) {
+				this.obstacles.push(newOb)
+				newOb.draw5()
+			}
+			
+			
+			
 			
 		}
 	},
@@ -217,6 +275,7 @@ const game = {
 
 	restartGame() {
 		$("#gameOver").hide()
+		$("#gameWon").hide()
 		game.player.lives = 5
 		game.player.x = 400 
 		game.player.y = 700 
@@ -224,6 +283,14 @@ const game = {
     	game.countLives()
 		game.isAlive()
 		animate()
+	},
+
+	winGame() {
+		
+			stopAnimation()
+			game.clearCanvas()
+			$("#gameWon").show()
+		
 	}
 }
 
@@ -243,6 +310,8 @@ function animate() {
 	game.player.draw();
 	game.countLives()
 	game.isAlive()
+	game.checkWin()
+	
 
 	
 
@@ -269,7 +338,7 @@ $("#introImage").on('click', function() {
   	$("#my-canvas").show()
   	
 
-  	//$("#gif").show();
+ 
 });
 
 
@@ -292,6 +361,10 @@ $("#gameOver").on('click', function() {
 
 })
 
+$("#gameWon").on('click', function() {
+    game.restartGame()
+
+})
 
 
 
