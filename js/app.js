@@ -15,6 +15,9 @@ $("#sailBoat").hide()
 $("#gameWon").hide()
 $("#instructions").hide()
 $("#shark").hide()
+$("#stone").hide()
+$("#cone").hide()
+$("#grass").hide()
 
 //class for the main player
 class Boat {
