@@ -4,53 +4,36 @@
 
 <head>
 
-	<title></title>
-
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-
 	<link href="https://fonts.googleapis.com/css?family=Wendy+One&display=swap" rel="stylesheet">
-
-
-	<!-- add fonts
-	add sailboat image -->
-
-
-
 </head>
 
 <body>
 
 	<h1>River Boat Game</h1>
-
-
-
 	<div id='container1'>
-
 		<form action="javascript:void(0);">
 			<input type="text" id="name" placeholder="Enter name of boat">
-
-			<button id="submit">Submit</button>
-			
+			<button id="submit">Submit</button>	
 		</form>
-		
-
 		<div id="nameTitle"></div>
-
 	</div>
 
 	<div id="introImage"><h2 id="letsPlay">Let's Play!</h2> <h3>CLICK HERE TO START</h3> </div>
-	<!-- <img id="gif" src="https://media.giphy.com/media/xT0GqcCJJJH12hJvGM/giphy.gif"> -->
 
-
-
-
+	<div id=instructions>
+		<p>Instructions</p>
+		<p>1. Name your boat above</p>
+		<p>2. Use up, down, left and right arrows to navigate</p>
+		<p>3. Avoid the grass! (or lose a life)</p>
+		<p>4. Reach the other side of the river and you win!</p>
+	</div>
 
 	<canvas id="my-canvas" width="800" height="800">
 		<h1>Lives: </h1><h2></h2>
 	</canvas>
 	
-
 	<div id=gameOver>
 		<p id="gameOverTag">
 			Game over! <br>
@@ -65,15 +48,15 @@
 		</p>
 	</div>
 
-
-
 	<img id="sailBoat" src="http://pngimg.com/uploads/boat/boat_PNG61.png">
 	<img id="shark" src="images/shark.png">
 	<img id="cone" src="http://pngimg.com/uploads/cones/cones_PNG13299.png">
 	<img id="stone" src="http://pngimg.com/uploads/stone/stone_PNG13599.png">
 	<img id="grass" src="http://pngimg.com/uploads/grass/grass_PNG4928.png">
 	<img id="croc" src="http://pngimg.com/uploads/crocodile/crocodile_PNG13185.png">
+	
 	<script type="text/javascript"src="js/app.js"></script>
+
 </body>
 
 </html>
