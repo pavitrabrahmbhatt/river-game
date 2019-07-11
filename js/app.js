@@ -11,13 +11,14 @@ console.log(ctx); // cool, our rendering context is set up
 $("#my-canvas").hide()
 $("#submit").hide()
 $("#name").hide()
+$("#gameOver").hide()
 
 
 
 class Boat {
 	constructor (boatName) {
 		this.name = boatName;
-		this.lives = 3;
+		this.lives = 5;
 		this.x = 400 
 		this.y = 700 
 		this.r = 20
@@ -42,9 +43,11 @@ class Boat {
 	    game.countLives()
 	    game.checkCollision()
 	    game.countLives()
+	    game.isAlive()
 	    ctx.font = "30px Arial";
+	    ctx.fillStyle = 'black';
 		ctx.fillText("Lives: " + game.player.lives, 10, 780);
-		game.isAlive()
+		
 	}
 	
 	draw() {
@@ -64,10 +67,12 @@ class Obstacle {
 		this.color = "black"
 	}
   	draw() {
+ 
 	    ctx.beginPath();
 	    ctx.rect(this.x, this.y, this.width, this.height)
 	    ctx.fillStyle = "black";
 	    ctx.fill();
+	    ctx.globalCompositeOperation='source-over';
   	}
   	
 }
@@ -83,9 +88,15 @@ const game = {
 
 	countLives: function (){
 		if (this.checkCollision() === true){
+
 			this.player.lives--;
 			console.log(this.player.lives);
+
 		}
+		ctx.font = "30px Arial";
+		ctx.fillStyle = 'black';
+		ctx.fillText("Lives: " + game.player.lives, 10, 780);
+		
 	},
 
 	isAlive: function(){
@@ -95,11 +106,15 @@ const game = {
 		} else {
 			return true
 		}
+		ctx.font = "30px Arial";
+		ctx.fillStyle = 'black';
+		ctx.fillText("Lives: " + game.player.lives, 10, 780);
 	},
 
 	endGame: function () {
 			console.log("You have died");
-			//pop up screen that says ^^^
+			stopAnimation()
+			$("#gameOver").show()
 		
 	},
 
@@ -110,6 +125,7 @@ const game = {
 		$( "#nameTitle" ).text(this.player.name);
 		$("#name").hide()
 		$("#submit").hide()	
+		
 		this.player.draw()
 		animate()
 	},
@@ -154,6 +170,7 @@ const game = {
 		}
 
 	},
+	
 	moreObstacles() {
 		for (let i = 0; i < 2; i++) {
 			let row = Math.floor(Math.random() * 5) + 1
@@ -188,25 +205,46 @@ const game = {
   			) { 
 	     		console.log("collision");
 	     		this.obstacles.splice(i,1);
+	     		this.countLives()
+	     		this.isAlive()
 	         	return true
+
 	    	} 
 		} 
 		// this.drawObstacles()
 		return false
 	},
 
-	// restartGame() {
-
-	// }
+	restartGame() {
+		$("#gameOver").hide()
+		game.player.lives = 5
+		game.player.x = 400 
+		game.player.y = 700 
+    	game.makeObstacles();
+    	game.countLives()
+		game.isAlive()
+		animate()
+	}
 }
 
+
+
+let requestID;
+let animationRunning = false;
 let frame = 0
 function animate() {
+
+	animationRunning = true; 
+	
 
 	game.clearCanvas();
 	game.moveObstacles();
 	game.drawObstacles()
 	game.player.draw();
+	game.countLives()
+	game.isAlive()
+
+	
 
 	// every 60 frames
 	frame++
@@ -215,7 +253,12 @@ function animate() {
 	}
 
 
-	window.requestAnimationFrame(animate)
+	requestID =window.requestAnimationFrame(animate)
+}
+
+function stopAnimation() {
+  cancelAnimationFrame(requestID)
+  animationRunning = false;
 }
 
 
@@ -234,6 +277,9 @@ $("#submit").on('click', function() {
     let theValue = $("#name").val();
     game.makeBoat(theValue);
     game.makeObstacles();
+    game.countLives()
+	game.isAlive()
+
 })
 
 
@@ -241,6 +287,10 @@ $(document).on('keydown', function(e) {
 	game.player.move(e.key)
 });
 
+$("#gameOver").on('click', function() {
+    game.restartGame()
+
+})
 
 
 
