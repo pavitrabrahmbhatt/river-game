@@ -18,6 +18,7 @@ $("#shark").hide()
 $("#stone").hide()
 $("#cone").hide()
 $("#grass").hide()
+$("#croc").hide()
 
 //class for the main player
 class Boat {
